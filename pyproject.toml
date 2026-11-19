@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentg2p"
-version = "0.1.0"
+version = "0.1.1"
 description = "Grapheme-to-phoneme conversion for 350+ languages: dictionary lookup, then a Phonetisaurus FST or ByT5 model"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.9"
-dependencies = ["numpy>=1.21"]
+dependencies = ["numpy>=1.21", "certifi"]
 keywords = ["g2p", "grapheme-to-phoneme", "phonetics", "IPA", "pronunciation", "phonetisaurus", "byt5"]
 classifiers = [
     "Programming Language :: Python :: 3",

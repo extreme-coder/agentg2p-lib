@@ -17,9 +17,11 @@ import hashlib
 import json
 import os
 import shutil
+import ssl
 import sys
 import tarfile
 import tempfile
+import urllib.error
 import urllib.request
 from pathlib import Path, PurePosixPath
 from typing import Iterable, List, Optional, Union
@@ -52,6 +54,26 @@ def _log(msg: str, quiet: bool) -> None:
         print(f"agentg2p: {msg}", file=sys.stderr, flush=True)
 
 
+def _urlopen(req):
+    """Opens with the system's certificates, then certifi's if those fail to verify.
+
+    python.org's macOS Python, for one, has no usable system certificates until
+    "Install Certificates.command" is run; certifi covers that case, and trying the
+    system store first keeps corporate CAs working.
+    """
+    try:
+        return urllib.request.urlopen(req, timeout=60)
+    except urllib.error.URLError as e:
+        if not isinstance(e.reason, ssl.SSLCertVerificationError):
+            raise
+        try:
+            import certifi
+        except ImportError:
+            raise e from None
+        context = ssl.create_default_context(cafile=certifi.where())
+        return urllib.request.urlopen(req, timeout=60, context=context)
+
+
 def _fetch(name: str, dest: Path, quiet: bool = False, size: Optional[int] = None) -> None:
     if offline():
         raise DownloadError(f"{name} is not downloaded and AGENTG2P_OFFLINE is set")
@@ -62,7 +84,7 @@ def _fetch(name: str, dest: Path, quiet: bool = False, size: Optional[int] = Non
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_name(dest.name + ".part")
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp, open(tmp, "wb") as f:
+        with _urlopen(req) as resp, open(tmp, "wb") as f:
             shutil.copyfileobj(resp, f, length=1 << 20)
     except OSError as e:
         tmp.unlink(missing_ok=True)

@@ -26,7 +26,7 @@ from .g2p import G2P
 from .lexicon import Lexicon
 from .text import Token
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = ["G2P", "Token", "DictionaryInfo", "FSTModel", "Lexicon", "DataNotFound", "load",
            "transcribe", "languages", "dictionaries", "find_data_dir", "download"]
 
