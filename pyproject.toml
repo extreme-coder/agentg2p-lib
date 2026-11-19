@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentg2p"
+version = "0.1.0"
+description = "Grapheme-to-phoneme conversion for 350+ languages: dictionary lookup, then a Phonetisaurus FST or ByT5 model"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.21"]
+keywords = ["g2p", "grapheme-to-phoneme", "phonetics", "IPA", "pronunciation", "phonetisaurus", "byt5"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Text Processing :: Linguistic",
+    "Intended Audience :: Science/Research",
+]
+
+[project.optional-dependencies]
+neural = ["torch>=2.0", "transformers>=4.40", "safetensors"]
+
+[project.urls]
+Homepage = "https://github.com/extreme-coder/agentg2p-lib"
+Issues = "https://github.com/extreme-coder/agentg2p-lib/issues"
+
+[project.scripts]
+agentg2p = "agentg2p.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["agentg2p"]
