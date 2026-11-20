@@ -134,7 +134,7 @@ SHA-256 hash.
 The bundled data comes from [MFA](https://mfa-models.readthedocs.io/),
 [WikiPron](https://github.com/CUNY-CL/wikipron) (Wiktionary) and
 [CharsiuG2P](https://github.com/lingjzhu/CharsiuG2P), and the models are trained on it.
-See [DATA_LICENSE.md](DATA_LICENSE.md). The code is MIT-licensed ([LICENSE](LICENSE)).
+See [DATA_LICENSE.md](https://github.com/extreme-coder/agentg2p-lib/blob/main/DATA_LICENSE.md). The code is MIT-licensed ([LICENSE](https://github.com/extreme-coder/agentg2p-lib/blob/main/LICENSE)).
 
 ## Development
 
@@ -144,6 +144,5 @@ python -m unittest discover -s tests
 AGENTG2P_TEST_BUNDLE=~/.cache/agentg2p python -m unittest discover -s tests   # with a full data folder
 ```
 
-Releasing data: `tools/make_release.py` packs a data bundle into release assets, which
-are then uploaded with `gh release create`. The data bundle itself is built in the
-AgentG2P research project.
+Releasing (code to PyPI, data to GitHub Releases): see [RELEASING.md](https://github.com/extreme-coder/agentg2p-lib/blob/main/RELEASING.md).
+Changes: [CHANGELOG.md](https://github.com/extreme-coder/agentg2p-lib/blob/main/CHANGELOG.md).

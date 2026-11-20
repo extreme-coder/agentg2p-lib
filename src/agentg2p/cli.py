@@ -12,7 +12,7 @@ Examples:
 import argparse
 import sys
 
-from . import dictionaries, languages
+from . import __version__, dictionaries, languages, remote
 from .assets import DataNotFound, get_catalog
 from .remote import DownloadError, download
 from .g2p import G2P
@@ -35,6 +35,8 @@ def main(argv=None) -> int:
                    help="download the default dictionary (and ByT5 model, if torch is installed) for LANG")
     p.add_argument("--download-all", action="store_true", help="download every dictionary (about 1.5 GB)")
     p.add_argument("--data-dir", help="data folder (default: $AGENTG2P_DATA, else ~/.cache/agentg2p)")
+    p.add_argument("--version", action="version",
+                   version=f"agentg2p {__version__} (data {remote.DATA_RELEASE})")
     args = p.parse_args(argv)
 
     try:
